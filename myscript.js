@@ -28,7 +28,7 @@ if (navigator.geolocation) {
     $('#temp').html(Math.round(data.currently.temperature));
 
     // weather icon for current weather
-    var image = "<img src = https://github.com/ckpantelides/weather/blob/master/images/" + data.currently.icon + ".svg>"
+    var image = "<img src = /weather/images/" + data.currently.icon + ".svg>"
     $("#icon").html(image);
 
     // loop for hourly updates
@@ -40,7 +40,7 @@ if (navigator.geolocation) {
       var time_hourly = hour_date.getHours();
 
       // icon for each hourly update
-      var icon_hourly = "<img src = https://github.com/ckpantelides/weather/blob/master/images/" + data.hourly.data[i].icon + ".svg>";
+      var icon_hourly = "<img src = /weather/images/" + data.hourly.data[i].icon + ".svg>";
 
       // temp for each hourly update
       var temp_hourly = Math.round(data.hourly.data[i].temperature);
