@@ -43,7 +43,7 @@ if (navigator.geolocation) {
       var icon_hourly = "<img src = https://rawgit.com/ckpantelides/weather/master/images/" + data.hourly.data[i].icon + ".svg>";
 
       // temp for each hourly update
-      var temp_hourly = Math.round(data.hourly.data[i].temperature);
+      var temp_hourly = Math.round(data.hourly.data[i].temperature) + "&#176";
 
       // append to scrollmenu
       $('#hourly').append(
