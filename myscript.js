@@ -32,7 +32,7 @@ if (navigator.geolocation) {
     $("#icon").html(image);
 
     // loop for hourly updates
-    for(var i = 0; i < 24; i++) {
+    for(var i = 1; i < 25; i++) {
 
       // hour of each update
       var unix_timestamp = data.hourly.data[i].time;
