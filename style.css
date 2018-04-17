@@ -85,7 +85,7 @@ div.scrollmenu img {
 @media only screen and (max-width:450px) {
    h1 {
       font-size : 50px;
-      padding-top : 130px;
+      padding-top : 100px;
       }
 
   h2 {
@@ -95,4 +95,8 @@ div.scrollmenu img {
   p {
        font-size : 12px;
     }
+  
+  .summary {
+    max-width: 250px;
+  }
 }
