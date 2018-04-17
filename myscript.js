@@ -6,8 +6,9 @@ if (navigator.geolocation) {
       var lat = position.coords.latitude;
       var lon = position.coords.longitude;
 
-      // if successful move to getWeather function
+      // if successful move to getWeather and getPlaceName functions
       getWeather(lat, lon);
+      getPlaceName(lat,lon)
     });
   }
 
@@ -23,8 +24,7 @@ if (navigator.geolocation) {
   // parse JSON from API call
   $.getJSON(api_call, function(data) {
 
-    // current timezone and temperature
-    $('#name').html(data.timezone);
+    // current temperature
     $('#temp').html(Math.round(data.currently.temperature));
 
     // weather icon for current weather
@@ -59,6 +59,18 @@ if (navigator.geolocation) {
 
       }
     });
+  }
+  
+  // second API call for place name necessary, as not offered by Dark Sky
+  function getPlaceName(lat,lon) {
+    var api_call2 = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon +
+                    "&appid=0befa5edd94dc4137482fab569899a79&units=metric";
+    
+  // parse data and append to name placeholder
+    $.getJSON(api_call2, function(data2) {
+        
+      $('#name').html(data2.name);
+      });
   }
 
   // current date
