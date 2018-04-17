@@ -96,7 +96,7 @@ div.scrollmenu img {
        font-size : 12px;
     }
   
-  .summary {
+  p span#summary {
     width: 250px;
   }
 }
