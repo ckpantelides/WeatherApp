@@ -63,8 +63,8 @@ if (navigator.geolocation) {
   
   // second API call for place name necessary, as not offered by Dark Sky
   function getPlaceName(lat,lon) {
-    var api_call2 = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon +
-                    "&appid=0befa5edd94dc4137482fab569899a79&units=metric";
+    var api_call2 = "https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=" + 
+                     lat + "&lon=" + lon + "&appid=0befa5edd94dc4137482fab569899a79&units=metric";
     
   // parse data and append to name placeholder
     $.getJSON(api_call2, function(data2) {
