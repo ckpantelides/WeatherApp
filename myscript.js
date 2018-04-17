@@ -30,7 +30,10 @@ if (navigator.geolocation) {
     // weather icon for current weather
     var image = '<img src = /weather/images/' + data.currently.icon + '.svg>';
     $("#icon").html(image);
-
+    
+    // weather summary
+    $('#summary').html(data.hourly.summary);
+      
     // loop for hourly updates
     for(var i = 1; i < 25; i++) {
 
