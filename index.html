@@ -17,8 +17,6 @@
 
 <body>
 
-  <div class="container">
-
     <h1>Weather App.</h1>
 
     <p><span id="date"></span></p>
@@ -26,12 +24,17 @@
     <p><span id="icon"></span></p>
     <p><span id="summary"></span></p>
 
-    <div class="scrollmenu">
-      <span id="hourly"></span>
+    <div id="hourly-forecast" style="display:block;">
+      <span id="hourly"></div>
     </div>
 
+    <div id="daily-forecast" style="display:none;">
+      <span id="daily"></div>
+    </div>
 
-  </div>
+    <button>
+      <img src = images/switch.svg id="switch">
+    </button>
 
 </body>
 
