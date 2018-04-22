@@ -1,7 +1,4 @@
-* {
-
-  box-sizing: border-box;
-  margin: 0px;
+body {
   background-color: #ffbdbd;
 }
 
@@ -10,9 +7,6 @@ h1 {
   text-align: center;
   font-size: 60px;
   color: #06051d;
-  width: 100%;
-  padding: 20px;
-  padding-top: 140px;
   font-weight:normal;
 }
 
