@@ -8,10 +8,10 @@ h1 {
   font-size: 60px;
   color: #06051d;
   font-weight:normal;
+  padding-top: 100px;
 }
 
 h2 {
-  font-family: font-family: 'Abril Fatface', cursive; 'Josefin Sans', sans-serif;
   text-align: center;
   font-size: 24px;
   color: #06051d;
@@ -21,9 +21,7 @@ h2 {
   font-weight:bold;
 }
 
-
 p {
-  font-family: font-family: 'Abril Fatface', cursive; 'Josefin Sans', sans-serif;
   text-align: center;
   font-size: 14px;
   color: #06051d;
@@ -39,14 +37,27 @@ img {
   padding: 0px;
 }
 
-div.scrollmenu {
+img#switch {
+  width: 15px;
+  height: 15px;
+}
+
+button {
+  background-color: #ffbdbd;
+  display: block;
+  margin: 0 auto;
+  border: none;
+  shadow: none;
+}
+
+#hourly-forecast {
     overflow: auto;
     white-space: nowrap;
     margin: 10px;
     text-align: center;
 }
 
-div.scrollmenu p {
+#hourly-forecast p {
     display: inline-block;
     text-align: center;
     padding: 14px;
@@ -54,22 +65,57 @@ div.scrollmenu p {
     text-decoration: none;
 }
 
-div.scrollmenu ul {
+#hourly-forecast ul {
     display: inline-block;
     padding: 0px;
 }
 
-div.scrollmenu li {
+#hourly-forecast li {
     text-align: center;
     width: 50px;
     text-decoration: none;
-    font-family: font-family: 'Abril Fatface', cursive;
     font-size: 10px;
     color: #06051d;
     font-weight:normal;
 }
 
-div.scrollmenu img {
+#hourly-forecast img {
+    height: 30px;
+    width: 30px;
+    padding: 0px;
+    margin: 0px;
+}
+
+#daily-forecast {
+    overflow: auto;
+    white-space: nowrap;
+    margin: 10px;
+    text-align: center;
+}
+
+#daily-forecast p {
+    display: inline-block;
+    text-align: center;
+    padding: 14px;
+    width: 50px;
+    text-decoration: none;
+}
+
+#daily-forecast ul {
+    display: inline-block;
+    padding: 0px;
+}
+
+#daily-forecast li {
+    text-align: center;
+    width: 50px;
+    text-decoration: none;
+    font-size: 10px;
+    color: #06051d;
+    font-weight:normal;
+}
+
+#daily-forecast img {
     height: 30px;
     width: 30px;
     padding: 0px;
@@ -78,8 +124,8 @@ div.scrollmenu img {
 
 @media only screen and (max-width:450px) {
    h1 {
-      font-size : 50px;
-      padding-top : 100px;
+      font-size : 45px;
+      padding-top : 90px;
       }
 
   h2 {
@@ -90,7 +136,7 @@ div.scrollmenu img {
        font-size : 12px;
     }
   
-  p span#summary {
-    width: 250px;
+  #summary {
+    width: 80%;
   }
 }
