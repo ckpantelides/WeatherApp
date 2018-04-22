@@ -71,7 +71,7 @@ if (navigator.geolocation) {
       var icon_daily = '<img src = images/' + data.daily.data[j].icon + '.svg>';
 
       // temp for each daily update
-      var temp_daily = Math.round(data.daily.data[j].temperatureHigh );
+      var temp_daily = Math.round(data.daily.data[j].temperatureHigh ) + "&#176";
 
       // append daily forecast to hidden scrollmenu
       $('#daily').append(
