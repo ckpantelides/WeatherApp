@@ -34,7 +34,7 @@ if (navigator.geolocation) {
     // weather summary
     $('#summary').html(data.hourly.summary);
       
-    // loop for hourly updates
+    // loop for hourly forecast
     for(var i = 1; i < 25; i++) {
 
       // hour of each update
@@ -56,7 +56,31 @@ if (navigator.geolocation) {
         '<li>' + temp_hourly + '</li>' +
         '</ul>'
         );
+      }
+      
+      // loop for daily forecast
+      for(var j=1; j<8; j++) {
 
+      // get day of week
+      var timestamp = data.daily.data[j].time;
+      var a = new Date(timestamp*1000);
+      var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      var dayOfWeek = days[a.getDay()]
+
+      // icon for each daily update
+      var icon_daily = '<img src = images/' + data.daily.data[j].icon + '.svg>';
+
+      // temp for each daily update
+      var temp_daily = Math.round(data.daily.data[j].temperatureHigh );
+
+      // append daily forecast to hidden scrollmenu
+      $('#daily').append(
+      '<ul style="list-style-type:none">' +
+        '<li>' + dayOfWeek + '</li>' +
+        '<li>' + icon_daily + '</li>' +
+        '<li>' + temp_daily + '</li>' +
+        '</ul>'
+        );
       }
     });
   }
@@ -82,6 +106,21 @@ if (navigator.geolocation) {
 
   document.getElementById("date").innerHTML = d;
 
+  // swaps hourly and daily forecasts with button click
+  $("button").click(function() {
+      d1 = document.getElementById("hourly-forecast");
+      d2 = document.getElementById("daily-forecast");
+
+      if( d2.style.display == "none" ) {
+        d1.style.display = "none";
+        d2.style.display = "block";
+      }
+
+      else {
+      d1.style.display = "block";
+      d2.style.display = "none";
+     }
+  });
 });
 
 
