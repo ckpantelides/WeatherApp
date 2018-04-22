@@ -100,10 +100,6 @@ if (navigator.geolocation) {
   // current date
   var date = new Date();
   var d = date.toDateString();
-  var c = date.toGMTString();
-  var b = date.toLocaleString();
-  var a = c.split('GMT');
-
   document.getElementById("date").innerHTML = d;
 
   // swaps hourly and daily forecasts with button click
