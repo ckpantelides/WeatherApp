@@ -2,13 +2,28 @@ body {
   background-color: #ffbdbd;
 }
 
+input#search {
+  border-color: black;
+  border-radius: 50px;
+  text-align: center;
+  width: 30%;
+  background-color: #ffbdbd;
+  margin: 0 auto;
+  display: block;
+  border-width: 1px;
+}
+
+form {
+  padding-top: 10px;
+}
+
 h1 {
   font-family: 'Abril Fatface', cursive;'Josefin Sans', sans-serif;
   text-align: center;
-  font-size: 60px;
+  font-size: 55px;
   color: #06051d;
   font-weight:normal;
-  padding-top: 100px;
+  padding-top: 50px;
 }
 
 h2 {
@@ -21,6 +36,7 @@ h2 {
   font-weight:bold;
 }
 
+
 p {
   text-align: center;
   font-size: 14px;
@@ -32,14 +48,29 @@ p {
 }
 
 img {
-  height: 50px;
   width: 50px;
-  padding: 0px;
+  height: 50px;
+}
+
+img#searchIcon {
+  width: 15px;
+  height: 15px;
 }
 
 img#switch {
   width: 15px;
   height: 15px;
+}
+
+img.tempIcon {
+  width: 12px;
+  height: 12px;
+}
+
+div#searchButton {
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 10px;
 }
 
 button {
@@ -48,7 +79,6 @@ button {
   margin: 0 auto;
   border: none;
   shadow: none;
-  outline:none;
 }
 
 #hourly-forecast {
@@ -125,8 +155,8 @@ button {
 
 @media only screen and (max-width:450px) {
    h1 {
-      font-size : 45px;
-      padding-top : 60px;
+      font-size : 50px;
+      padding-top : 100px;
       }
 
   h2 {
@@ -136,8 +166,11 @@ button {
   p {
        font-size : 12px;
     }
-  
+
   #summary {
     width: 80%;
   }
+
+  input#search {
+    width: 45%;
 }

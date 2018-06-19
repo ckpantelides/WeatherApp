@@ -1,20 +1,41 @@
 $(document).ready(function(){
 
-// get geolocation from browser
-if (navigator.geolocation) {
+var lat
+var lon
+
+  // get geolocation from browser
+  if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
-      var lat = position.coords.latitude;
-      var lon = position.coords.longitude;
 
-      // if successful move to getWeather and getPlaceName functions
+      lat = position.coords.latitude;
+      lon = position.coords.longitude;
+
+      // if successful move to getWeather function
       getWeather(lat, lon);
-      getPlaceName(lat,lon)
+      getPlaceName(lat, lon);
     });
-  }
+    }
 
-  else {
-    console.log("Geolocation is not supported by this browser.");
-  }
+    else {
+        alert("Geolocation is not supported by this browser.");
+      }
+
+    // if user submits search, user geocoding to get weather
+    document.getElementById('theForm').onsubmit = function() {
+      event.preventDefault();
+      var newSearch = document.getElementById("search").value;
+
+      var geocode = "https://maps.googleapis.com/maps/api/geocode/json?address="
+      + newSearch + "&key=AIzaSyDKXRyAAjVhJQ6xP9C2AVpKjeQk9CYNHlw";
+
+      $.getJSON(geocode, function(geodata) {
+
+        lat = geodata.results[0].geometry.location.lat;
+        lon = geodata.results[0].geometry.location.lng;
+        document.getElementById("name").innerHTML = geodata.results[0].address_components[1].long_name;
+        getWeather(lat, lon);
+        });
+      }
 
   // API call using lat & lon
   function getWeather(lat, lon) {
@@ -24,18 +45,21 @@ if (navigator.geolocation) {
   // parse JSON from API call
   $.getJSON(api_call, function(data) {
 
-    // current temperature
+    // current temperature in celsius
     $('#temp').html(Math.round(data.currently.temperature));
 
+    // current temperature in fahrenheit
+    $('#tempf').html(Math.round(1.8*(data.currently.temperature)) + 32);
+
     // weather icon for current weather
-    var image = '<img src = /weather/images/' + data.currently.icon + '.svg>';
+    var image = "<img src = images/" + data.currently.icon + ".svg>"
     $("#icon").html(image);
-    
+
     // weather summary
     $('#summary').html(data.hourly.summary);
-      
-    // loop for hourly forecast
-    for(var i = 1; i < 25; i++) {
+
+    // loop for hourly updates
+    for(var i = 0; i < 24; i++) {
 
       // hour of each update
       var unix_timestamp = data.hourly.data[i].time;
@@ -43,22 +67,25 @@ if (navigator.geolocation) {
       var time_hourly = hour_date.getHours();
 
       // icon for each hourly update
-      var icon_hourly = '<img src = /weather/images/'  + data.hourly.data[i].icon + '.svg>';
+      var icon_hourly = '<img src = images/' + data.hourly.data[i].icon + '.svg>';
 
-      // temp for each hourly update
-      var temp_hourly = Math.round(data.hourly.data[i].temperature) + "&#176";
+      // temp in celsius for each hourly update
+      var temp_hourly = Math.round(data.hourly.data[i].temperature);
+
+      // temp in fahrenheit for each hourly update
+      var tempf_hourly = Math.round(1.8*(data.hourly.data[i].temperature)) + 32
 
       // append to scrollmenu
       $('#hourly').append(
-      '<ul style="list-style-type:none">' +
+      '<ul style="list-style-type:none;">' +
         '<li>' + time_hourly + ':00</li>' +
         '<li>' + icon_hourly + '</li>' +
         '<li>' + temp_hourly + '</li>' +
         '</ul>'
         );
+
       }
-      
-      // loop for daily forecast
+
       for(var j=1; j<8; j++) {
 
       // get day of week
@@ -71,7 +98,7 @@ if (navigator.geolocation) {
       var icon_daily = '<img src = images/' + data.daily.data[j].icon + '.svg>';
 
       // temp for each daily update
-      var temp_daily = Math.round(data.daily.data[j].temperatureHigh ) + "&#176";
+      var temp_daily = Math.round(data.daily.data[j].temperatureHigh );
 
       // append daily forecast to hidden scrollmenu
       $('#daily').append(
@@ -84,22 +111,25 @@ if (navigator.geolocation) {
       }
     });
   }
-  
-  // second API call for place name necessary, as not offered by Dark Sky
-  function getPlaceName(lat,lon) {
-    var api_call2 = "https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=" + 
-                     lat + "&lon=" + lon + "&appid=0befa5edd94dc4137482fab569899a79&units=metric";
-    
-  // parse data and append to name placeholder
-    $.getJSON(api_call2, function(data2) {
-        
-      $('#name').html(data2.name);
-      });
-  }
+
+  // second API call for place name
+  function getPlaceName(lat, lon) {
+
+  var api_call2 = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lon +
+                "&key=AIzaSyDKXRyAAjVhJQ6xP9C2AVpKjeQk9CYNHlw";
+
+                $.getJSON(api_call2, function(data2) {
+                  document.getElementById("name").innerHTML = data2.results[0].address_components[1].long_name;
+                  document.getElementById("namef").innerHTML = data2.results[0].address_components[1].long_name;
+                });
 
   // current date
   var date = new Date();
   var d = date.toDateString();
+  var c = date.toGMTString();
+  var b = date.toLocaleString();
+  var a = c.split('GMT');
+
   document.getElementById("date").innerHTML = d;
 
   // swaps hourly and daily forecasts with button click
@@ -117,10 +147,41 @@ if (navigator.geolocation) {
       d2.style.display = "none";
      }
   });
+
+  // swaps searchIcon for searchBar
+  document.getElementById('searchButton').onclick = function() {
+
+      d1 = document.getElementById("searchButton");
+      d2 = document.getElementById("theForm");
+
+      if( d2.style.display == "none" ) {
+        d1.style.display = "none";
+        d2.style.display = "block";
+      }
+    }
+
+      // swaps celsius for fahrenheit
+      document.getElementsByClassName("tempIcon")[0].onclick = function() {
+
+          d1 = document.getElementById("celsius");
+          d2 = document.getElementById("fahrenheit");
+
+          if( d2.style.display == "none") {
+            d1.style.display = "none";
+            d2.style.display = "block";
+          }
+      }
+
+      // swaps fahrenheit for celsius
+      document.getElementsByClassName("tempIcon")[1].onclick = function() {
+
+          d1 = document.getElementById("celsius");
+          d2 = document.getElementById("fahrenheit");
+
+          if(d1.style.display == "none") {
+            d2.style.display = "none";
+            d1.style.display = "block";
+          }
+      }
+    }
 });
-
-
-
-
-
-
