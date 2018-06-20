@@ -11,6 +11,8 @@ input#search {
   margin: 0 auto;
   display: block;
   border-width: 1px;
+  font-family: times new roman;
+  height: 20px;
 }
 
 form {
@@ -154,23 +156,23 @@ button {
 }
 
 @media only screen and (max-width:450px) {
-   h1 {
-      font-size : 50px;
-      padding-top : 60px;
-      }
-
-  h2 {
-      font-size : 20px;
-      }
-
-  p {
-       font-size : 12px;
-    }
-
-  #summary {
-    width: 80%;
+h1 {
+  font-size : 50px;
+  padding-top : 60px;
   }
 
-  input#search {
-    width: 45%;
+h2 {
+  font-size : 20px;
+    }
+
+p {
+  font-size : 12px;
+  }
+
+#summary {
+  width: 80%;
+  }
+
+input#search {
+  width: 55%;
 }
