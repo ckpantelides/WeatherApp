@@ -25,6 +25,12 @@ var lon
 
         // prevents refreshing page, which would end search
         event.preventDefault();
+      
+        // clears current weather data in hourly & daily forecast
+        $("#hourlyC").html("");
+        $("#hourlyF").html("");
+        $("#dailyC").html("");
+        $("#dailyF").html("");
 
         // take search value and geocode using google API
         var newSearch = document.getElementById("searchInput").value;
