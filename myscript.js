@@ -10,7 +10,7 @@ var lon
       lat = position.coords.latitude;
       lon = position.coords.longitude;
 
-      // if successful move to getWeather function
+      // if successful move to getWeather and getPlacename functions
       getWeather(lat, lon);
       getPlaceName(lat, lon);
     });
@@ -20,24 +20,30 @@ var lon
         alert("Geolocation is not supported by this browser.");
       }
 
-    // if user submits search, user geocoding to get weather
-    document.getElementById('theForm').onsubmit = function() {
-      event.preventDefault();
-      var newSearch = document.getElementById("search").value;
+    // if user submits search, use geocoding to new lat & lon
+    document.getElementById('searchForm').onsubmit = function() {
 
-      var geocode = "https://maps.googleapis.com/maps/api/geocode/json?address="
-      + newSearch + "&key=AIzaSyDKXRyAAjVhJQ6xP9C2AVpKjeQk9CYNHlw";
+        // prevents refreshing page, which would end search
+        event.preventDefault();
 
-      $.getJSON(geocode, function(geodata) {
+        // take search value and geocode using google API
+        var newSearch = document.getElementById("searchInput").value;
 
-        lat = geodata.results[0].geometry.location.lat;
-        lon = geodata.results[0].geometry.location.lng;
-        document.getElementById("name").innerHTML = geodata.results[0].address_components[1].long_name;
-        getWeather(lat, lon);
-        });
-      }
+        var geocode = "https://maps.googleapis.com/maps/api/geocode/json?address="
+        + newSearch + "&key=AIzaSyDKXRyAAjVhJQ6xP9C2AVpKjeQk9CYNHlw";
 
-  // API call using lat & lon
+        $.getJSON(geocode, function(geodata) {
+
+          // get new lat & lon for weather API call using geocode data
+          newLat = geodata.results[0].geometry.location.lat;
+          newLon = geodata.results[0].geometry.location.lng;
+          document.getElementById("name").innerHTML = geodata.results[0].address_components[1].long_name;
+          document.getElementById("nameF").innerHTML = geodata.results[0].address_components[1].long_name;
+          getWeather(newLat, newLon);
+          });
+        }
+
+  // API weather call using lat & lon
   function getWeather(lat, lon) {
   var api_call = "https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/71c3cf1a1b7f6003b89a311cd64c8c9d/"
                   + lat + "," + lon + "?units=si";
@@ -46,10 +52,10 @@ var lon
   $.getJSON(api_call, function(data) {
 
     // current temperature in celsius
-    $('#temp').html(Math.round(data.currently.temperature));
+    $('#tempC').html(Math.round(data.currently.temperature));
 
     // current temperature in fahrenheit
-    $('#tempf').html(Math.round(1.8*(data.currently.temperature)) + 32);
+    $('#tempF').html(Math.round(1.8*(data.currently.temperature)) + 32);
 
     // weather icon for current weather
     var image = "<img src = images/" + data.currently.icon + ".svg>"
@@ -73,19 +79,31 @@ var lon
       var temp_hourly = Math.round(data.hourly.data[i].temperature);
 
       // temp in fahrenheit for each hourly update
-      var tempf_hourly = Math.round(1.8*(data.hourly.data[i].temperature)) + 32
+      var tempf_hourly = Math.round(1.8*(data.hourly.data[i].temperature)) + 32;
 
-      // append to scrollmenu
-      $('#hourly').append(
+      // append hourly weather to scrollmenu (Celsius)
+      $('#hourlyC').append(
       '<ul style="list-style-type:none;">' +
         '<li>' + time_hourly + ':00</li>' +
         '<li>' + icon_hourly + '</li>' +
         '<li>' + temp_hourly + '</li>' +
         '</ul>'
+
+        );
+
+      // append hourly weather to scrollmenu (Fahrenheit)
+      $('#hourlyF').append(
+        '<ul style="list-style-type:none;">' +
+          '<li>' + time_hourly + ':00</li>' +
+          '<li>' + icon_hourly + '</li>' +
+          '<li>' + tempf_hourly + '</li>' +
+          '</ul>'
+
         );
 
       }
 
+      // loop for daily updates
       for(var j=1; j<8; j++) {
 
       // get day of week
@@ -97,17 +115,29 @@ var lon
       // icon for each daily update
       var icon_daily = '<img src = images/' + data.daily.data[j].icon + '.svg>';
 
-      // temp for each daily update
+      // temp in celsius for each daily update
       var temp_daily = Math.round(data.daily.data[j].temperatureHigh );
 
-      // append daily forecast to hidden scrollmenu
-      $('#daily').append(
+      // temp in fahrenheit for each hourly update
+      var tempf_daily = Math.round(1.8*(data.daily.data[j].temperatureHigh)) + 32
+
+      // append daily celsius forecast to hidden scrollmenu
+      $('#dailyC').append(
       '<ul style="list-style-type:none">' +
         '<li>' + dayOfWeek + '</li>' +
         '<li>' + icon_daily + '</li>' +
         '<li>' + temp_daily + '</li>' +
         '</ul>'
         );
+
+        // append daily fahrenheit forecast to hidden scrollmenu
+        $('#dailyF').append(
+        '<ul style="list-style-type:none">' +
+          '<li>' + dayOfWeek + '</li>' +
+          '<li>' + icon_daily + '</li>' +
+          '<li>' + tempf_daily + '</li>' +
+          '</ul>'
+          );
       }
     });
   }
@@ -119,69 +149,32 @@ var lon
                 "&key=AIzaSyDKXRyAAjVhJQ6xP9C2AVpKjeQk9CYNHlw";
 
                 $.getJSON(api_call2, function(data2) {
+                  // append name to html
                   document.getElementById("name").innerHTML = data2.results[0].address_components[1].long_name;
-                  document.getElementById("namef").innerHTML = data2.results[0].address_components[1].long_name;
+                  document.getElementById("nameF").innerHTML = data2.results[0].address_components[1].long_name;
                 });
 
   // current date
   var date = new Date();
   var d = date.toDateString();
-  var c = date.toGMTString();
-  var b = date.toLocaleString();
-  var a = c.split('GMT');
 
+  // append date to html
   document.getElementById("date").innerHTML = d;
 
-  // swaps hourly and daily forecasts with button click
-  $("button").click(function() {
-      d1 = document.getElementById("hourly-forecast");
-      d2 = document.getElementById("daily-forecast");
+  // toggle between celsius temp and hidden fahrenheit weather
+  $('.tempIcon').click(function() {
+    $('.temp').toggleClass('hidden');
+    });
 
-      if( d2.style.display == "none" ) {
-        d1.style.display = "none";
-        d2.style.display = "block";
-      }
+  // toggle between search icon and search bar
+  $('#searchIcon').click(function() {
+    $('.search').toggleClass('hidden');
+    });
 
-      else {
-      d1.style.display = "block";
-      d2.style.display = "none";
-     }
-  });
+  // toggle between hourly update or daily update
+  $('button').click(function() {
+    $('.hourlyDaily').toggleClass('hidden');
+    });
 
-  // swaps searchIcon for searchBar
-  document.getElementById('searchButton').onclick = function() {
-
-      d1 = document.getElementById("searchButton");
-      d2 = document.getElementById("theForm");
-
-      if( d2.style.display == "none" ) {
-        d1.style.display = "none";
-        d2.style.display = "block";
-      }
-    }
-
-      // swaps celsius for fahrenheit
-      document.getElementsByClassName("tempIcon")[0].onclick = function() {
-
-          d1 = document.getElementById("celsius");
-          d2 = document.getElementById("fahrenheit");
-
-          if( d2.style.display == "none") {
-            d1.style.display = "none";
-            d2.style.display = "block";
-          }
-      }
-
-      // swaps fahrenheit for celsius
-      document.getElementsByClassName("tempIcon")[1].onclick = function() {
-
-          d1 = document.getElementById("celsius");
-          d2 = document.getElementById("fahrenheit");
-
-          if(d1.style.display == "none") {
-            d2.style.display = "none";
-            d1.style.display = "block";
-          }
-      }
-    }
+  }
 });

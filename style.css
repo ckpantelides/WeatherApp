@@ -2,7 +2,16 @@ body {
   background-color: #ffbdbd;
 }
 
-input#search {
+.hidden {
+  display: none;
+}
+
+div.search {
+  text-align: center;
+  padding-top: 10px;
+}
+
+input#searchInput {
   border-color: black;
   border-radius: 50px;
   text-align: center;
@@ -11,7 +20,7 @@ input#search {
   margin: 0 auto;
   display: block;
   border-width: 1px;
-  font-family: times new roman;
+  font-family: Times New Roman;
   height: 20px;
 }
 
@@ -38,7 +47,6 @@ h2 {
   font-weight:bold;
 }
 
-
 p {
   text-align: center;
   font-size: 14px;
@@ -50,8 +58,8 @@ p {
 }
 
 img {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
 }
 
 img#searchIcon {
@@ -83,72 +91,21 @@ button {
   shadow: none;
 }
 
-#hourly-forecast {
-    overflow: auto;
-    white-space: nowrap;
-    margin: 10px;
-    text-align: center;
+div.hourlyDaily {
+  overflow: auto;
+  white-space: nowrap;
+  margin: 10px;
+  text-align: center;
 }
 
-#hourly-forecast p {
+div.hourlyDaily ul {
     display: inline-block;
-    text-align: center;
-    padding: 14px;
-    width: 50px;
-    text-decoration: none;
-}
-
-#hourly-forecast ul {
-    display: inline-block;
-    padding: 0px;
-}
-
-#hourly-forecast li {
-    text-align: center;
-    width: 50px;
-    text-decoration: none;
+    padding: 5px;
     font-size: 10px;
     color: #06051d;
-    font-weight:normal;
 }
 
-#hourly-forecast img {
-    height: 30px;
-    width: 30px;
-    padding: 0px;
-    margin: 0px;
-}
-
-#daily-forecast {
-    overflow: auto;
-    white-space: nowrap;
-    margin: 10px;
-    text-align: center;
-}
-
-#daily-forecast p {
-    display: inline-block;
-    text-align: center;
-    padding: 14px;
-    width: 50px;
-    text-decoration: none;
-}
-
-#daily-forecast ul {
-    display: inline-block;
-    padding: 0px;
-}
-
-#daily-forecast li {
-    text-align: center;
-    width: 50px;
-    text-decoration: none;
-    font-size: 10px;
-    color: #06051d;
-    font-weight:normal;
-}
-
-#daily-forecast img {
+div.hourlyDaily img {
     height: 30px;
     width: 30px;
     padding: 0px;
@@ -156,23 +113,30 @@ button {
 }
 
 @media only screen and (max-width:450px) {
-h1 {
+
+  img {
+    width: 50px;
+    height: 50px;
+  }
+
+  h1 {
   font-size : 50px;
   padding-top : 30px;
   }
 
-h2 {
+  h2 {
   font-size : 20px;
-    }
+  }
 
-p {
+  p {
   font-size : 12px;
   }
 
-#summary {
+  #summary {
   width: 80%;
   }
 
-input#search {
+  input#searchInput {
   width: 55%;
+  }
 }

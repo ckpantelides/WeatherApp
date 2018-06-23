@@ -14,46 +14,53 @@
 </head>
 
 <body>
-  <div id="searchButton" style="display:block;">
-      <img src = images/search.svg id="searchIcon">
+  <div class="search">
+      <img src ="images/search.svg" id="searchIcon">
   </div>
 
-<!-- <div id="searchBar" style="display:none;">
-</div> -->
-
-    <form id="theForm" onsubmit="return false" style="display:none;">
-      <input type="text" id="search">
+  <div class="search hidden">
+    <form id ="searchForm" onsubmit="return false">
+      <input type="text" id="searchInput">
     </form>
+  </div>
 
 
     <h1>Weather App.</h1>
 
     <p><span id="date"></span></p>
 
-      <div id="celsius" style="display:block;">
-        <p>It's <span id="temp"></span>&deg;C in <span id="name"></span>   <img src = images/temp.svg class="tempIcon"></p>
-      </div>
-      <div id="fahrenheit" style="display:none;">
-        <p>It's <span id="tempf"></span>&deg;F in <span id="namef"></span>   <img src = images/temp.svg class="tempIcon"></p>
-      </div>
-      <div id="tempChange">
 
-      </div>
+    <div class="temp">
+      <p>It's <span id="tempC"></span>&deg;C in <span id="name"></span>  <img src ="images/temp.svg" class="tempIcon"></p>
+    </div>
+    <div class="temp hidden">
+      <p>It's <span id="tempF"></span>&deg;F in <span id="nameF"></span>  <img src ="images/temp.svg" class="tempIcon"></p>
+    </div>
 
     <p><span id="icon"></span></p>
 
     <p><span id="summary"></span></p>
 
-    <div id="hourly-forecast" style="display:block;">
-      <span id="hourly"></div>
+    <div class="hourlyDaily">
+      <span class ="temp">
+        <span id="hourlyC"></span>
+      </span>
+      <span class ="temp hidden">
+        <span id="hourlyF"></span>
+      </span>
     </div>
 
-    <div id="daily-forecast" style="display:none;">
-      <span id="daily"></div>
+    <div class="hourlyDaily hidden">
+      <span class ="temp">
+        <span id="dailyC"></span>
+      </span>
+      <span class ="temp hidden">
+        <span id="dailyF"></span>
+      </span>
     </div>
 
     <button>
-      <img src = images/switch.svg id="switch">
+      <img src ="images/switch.svg" id="switch">
     </button>
 
 </body>
